@@ -1,6 +1,5 @@
 package com.codelabs.pruebatecnicaclima.ui.view.citysearch
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,7 +10,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -20,6 +18,8 @@ import androidx.navigation.NavController
 import com.codelabs.pruebatecnicaclima.R
 import com.codelabs.pruebatecnicaclima.utils.ConstantValues
 import com.codelabs.pruebatecnicaclima.utils.Routes
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.ImageHelper
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.TitleHelper
 
 @Composable
 fun SearchWeatherCity(navController: NavController, viewModelCitySearch: ViewModelCitySearch) {
@@ -38,12 +38,11 @@ fun SearchWeatherCity(navController: NavController, viewModelCitySearch: ViewMod
                 .align(CenterHorizontally)
                 .padding(bottom = 8.dp)
         )
-        Image(
-            painter = painterResource(id = R.drawable.weather_forecast),
-            contentDescription = "Weather",
+        ImageHelper(
             modifier = Modifier
                 .size(400.dp)
                 .align(CenterHorizontally),
+            image = R.drawable.weather_forecast
         )
         Spacer(modifier = Modifier.size(16.dp))
         SearchBar(
@@ -95,8 +94,8 @@ fun NavigateWeatherInformationCity(
 ) {
     Button(
         onClick = {
-            viewModelCitySearch.getInformationWheater(nameCity)
-            navController.navigate(Routes.Screen2.routes)
+            viewModelCitySearch.getInformationWeather(nameCity)
+            navController.navigate(Routes.ScreenDescriptionWeather.routes)
         },
         enabled = isEnabledButton,
         modifier = Modifier
@@ -109,18 +108,18 @@ fun NavigateWeatherInformationCity(
             disabledContentColor = Color.White
         ),
         shape = RoundedCornerShape(50.dp)
-        ) {
+    ) {
         Text(text = "Search")
     }
 }
 
 @Composable
-fun TitleApp(modifier: Modifier){
-    Text(
-        text = ConstantValues.APP_TITLE,
+fun TitleApp(modifier: Modifier) {
+    TitleHelper(
+        modifier = modifier,
+        title = ConstantValues.APP_TITLE,
         fontSize = 36.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(0xFF4EA8E9),
-        modifier = modifier
+        color = Color(0xFF4EA8E9)
     )
 }

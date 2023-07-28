@@ -22,6 +22,8 @@ import com.codelabs.pruebatecnicaclima.R
 import com.codelabs.pruebatecnicaclima.ui.view.citysearch.ViewModelCitySearch
 import com.codelabs.pruebatecnicaclima.utils.ConstantValues
 import com.codelabs.pruebatecnicaclima.utils.Routes
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.ImageHelper
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.TitleHelper
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,11 +40,11 @@ fun WeatherInformation(viewModelCitySearch: ViewModelCitySearch, navController: 
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.viento),
-                contentDescription = "",
+            ImageHelper(
                 modifier = Modifier
                     .size(300.dp)
+                    .align(Alignment.CenterHorizontally),
+                image = R.drawable.viento
             )
             Spacer(modifier = Modifier.size(20.dp))
             Text(
@@ -111,8 +113,7 @@ fun NavigateBackSearchCity(
 ) {
     Button(
         onClick = {
-            navController.navigate(Routes.Screen1.routes)
-
+            navController.navigate(Routes.ScreenCitySearch.routes)
         },
         enabled = true,
         modifier = Modifier
@@ -174,11 +175,11 @@ fun InformationDistribution(
 
 @Composable
 fun SubtitleApp(modifier: Modifier) {
-    Text(
-        text = ConstantValues.APP_SUBTITLE,
+    TitleHelper(
+        modifier = modifier,
+        title = ConstantValues.APP_SUBTITLE,
         fontSize = 36.sp,
         fontWeight = FontWeight.Bold,
-        color = Color(0xFF4EA8E9),
-        modifier = modifier
+        color = Color(0xFF4EA8E9)
     )
 }

@@ -38,15 +38,15 @@ class MainActivity : ComponentActivity() {
                     val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,
-                        startDestination = Routes.Screen1.routes
+                        startDestination = Routes.ScreenCitySearch.routes
                     ) {
-                        composable(Routes.Screen1.routes) {
+                        composable(Routes.ScreenCitySearch.routes) {
                             SearchWeatherCity(
                                 navController = navigationController,
                                 viewModelCitySearch = viewModelCitySearch
                             )
                         }
-                        composable(Routes.Screen2.routes) {
+                        composable(Routes.ScreenDescriptionWeather.routes) {
                             WeatherInformation(
                                 navController = navigationController,
                                 viewModelCitySearch = viewModelCitySearch

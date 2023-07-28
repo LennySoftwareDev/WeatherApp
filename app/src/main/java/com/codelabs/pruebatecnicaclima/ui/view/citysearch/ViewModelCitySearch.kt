@@ -27,7 +27,7 @@ class ViewModelCitySearch @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading:LiveData<Boolean> = _isLoading
 
-    fun getInformationWheater(nameCitySearch: String) {
+    fun getInformationWeather(nameCitySearch: String) {
         viewModelScope.launch {
             _isLoading.value = true
             _nameCity.value = nameCitySearch
