@@ -3,7 +3,10 @@ package com.codelabs.pruebatecnicaclima.ui.view.citysearch
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -18,6 +21,7 @@ import androidx.navigation.NavController
 import com.codelabs.pruebatecnicaclima.R
 import com.codelabs.pruebatecnicaclima.utils.ConstantValues
 import com.codelabs.pruebatecnicaclima.utils.Routes
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.ButtonHelper
 import com.codelabs.pruebatecnicaclima.utils.helperscompose.ImageHelper
 import com.codelabs.pruebatecnicaclima.utils.helperscompose.TitleHelper
 
@@ -92,25 +96,24 @@ fun NavigateWeatherInformationCity(
     navController: NavController,
     isEnabledButton: (Boolean)
 ) {
-    Button(
+    ButtonHelper(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp),
         onClick = {
             viewModelCitySearch.getInformationWeather(nameCity)
             navController.navigate(Routes.ScreenDescriptionWeather.routes)
         },
-        enabled = isEnabledButton,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(52.dp),
+        text = "Search",
+        sizeRoundedCornerShape = 50.dp,
+        isEnabled = isEnabledButton,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color(0xFF4EA8E9),
             disabledBackgroundColor = Color(0xFF78C8F9),
             contentColor = Color.White,
             disabledContentColor = Color.White
-        ),
-        shape = RoundedCornerShape(50.dp)
-    ) {
-        Text(text = "Search")
-    }
+        )
+    )
 }
 
 @Composable

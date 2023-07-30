@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,7 @@ import com.codelabs.pruebatecnicaclima.R
 import com.codelabs.pruebatecnicaclima.ui.view.citysearch.ViewModelCitySearch
 import com.codelabs.pruebatecnicaclima.utils.ConstantValues
 import com.codelabs.pruebatecnicaclima.utils.Routes
+import com.codelabs.pruebatecnicaclima.utils.helperscompose.ButtonHelper
 import com.codelabs.pruebatecnicaclima.utils.helperscompose.ImageHelper
 import com.codelabs.pruebatecnicaclima.utils.helperscompose.TitleHelper
 
@@ -29,7 +29,7 @@ import com.codelabs.pruebatecnicaclima.utils.helperscompose.TitleHelper
 @Composable
 fun WeatherInformation(viewModelCitySearch: ViewModelCitySearch, navController: NavController) {
 
-    val city = viewModelCitySearch.city.observeAsState().value
+    val city = viewModelCitySearch.city.observeAsState().value?.result
     val isLoading: Boolean by viewModelCitySearch.isLoading.observeAsState(initial = false)
 
     if (isLoading) {
@@ -68,7 +68,9 @@ fun WeatherInformation(viewModelCitySearch: ViewModelCitySearch, navController: 
                     .padding(bottom = 8.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.clima),
+                painter = painterResource(
+                    id = R.drawable.clima
+                ),
                 contentDescription = "",
                 modifier = Modifier
                     .size(300.dp)
@@ -77,28 +79,28 @@ fun WeatherInformation(viewModelCitySearch: ViewModelCitySearch, navController: 
             Spacer(modifier = Modifier.height(30.dp))
             InformationDistribution(
                 R.drawable.ubicacion,
-                ("Ciudad: " + city?.name.toString()),
+                "Ciudad: " + (city!!.name),
                 Color.Black
             )
             Spacer(modifier = Modifier.size(10.dp))
             SeparateInformation()
             InformationDistribution(
                 icon = R.drawable.temperatura,
-                text = "Temperatura Actual: " + city?.main?.temp.toString() + "°C",
+                text = ("Temperatura Actual: " + city.main.temp + "°C"),
                 Color.Blue
             )
             Spacer(modifier = Modifier.size(10.dp))
             SeparateInformation()
             InformationDistribution(
                 icon = R.drawable.sensacion_termica,
-                text = "Sensación Térmica: " + city?.main?.feels_like.toString() + "°C",
+                text = "Sensación Térmica: " + city.main.feels_like + "°C",
                 Color.Red
             )
             Spacer(modifier = Modifier.size(10.dp))
             SeparateInformation()
             InformationDistribution(
                 icon = R.drawable.humedad,
-                text = "Humedad: " + city?.main?.humidity.toString() + "%",
+                text = "Humedad: " + city.main.humidity + "%",
                 Color.LightGray
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -111,24 +113,21 @@ fun WeatherInformation(viewModelCitySearch: ViewModelCitySearch, navController: 
 fun NavigateBackSearchCity(
     navController: NavController,
 ) {
-    Button(
+    ButtonHelper(
         onClick = {
             navController.navigate(Routes.ScreenCitySearch.routes)
         },
-        enabled = true,
+        isEnabled = true,
         modifier = Modifier
             .fillMaxWidth()
             .height(52.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color(0xFF4EA8E9),
-            disabledBackgroundColor = Color(0xFF78C8F9),
             contentColor = Color.White,
-            disabledContentColor = Color.White
         ),
-        shape = RoundedCornerShape(50.dp)
-    ) {
-        Text(text = "Back")
-    }
+        text = "Back",
+        sizeRoundedCornerShape = 50.dp
+    )
 }
 
 @Composable
@@ -143,7 +142,7 @@ fun SeparateInformation() {
 @Composable
 fun InformationDistribution(
     @DrawableRes icon: Int,
-    text: String,
+    text: String?,
     color: Color
 ) {
     Card(
@@ -164,7 +163,7 @@ fun InformationDistribution(
             )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
-                text = text,
+                text = text ?: "sin información",
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF4EA8E9),
                 fontSize = 24.sp
